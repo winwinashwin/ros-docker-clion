@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  rosmaster:
+    container_name: rosmaster
+    image: ros:melodic
+    command: roscore
+    ports:
+      - "11311:11311"
+
+  sandbox:
+    container_name: clion_remote_env
+    build:
+      context: ./docker
+      dockerfile: sandbox.Dockerfile
+    tty: true
+    cap_add:
+      - SYS_PTRACE  # For debugging purposes
+    environment:
+      - "ROS_MASTER_URI=http://rosmaster:11311"
+    volumes:
+      - ./src:/home/rosdev/catkin_ws/src
+    ports:
+      - "2222:22"
+    depends_on:
+      - rosmaster
