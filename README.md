@@ -1,12 +1,22 @@
 # ros-docker-clion
 
-The Holy Trinity - ROS + Docker + CLion IDE
+Yet another workflow merging the Holy Trinity - ROS + Docker + CLion IDE. Creates a sandbox environment for building and testing ROS projects.
+
+**But why I hear you ask. Here are my reasons:**
+1. I cannot stand VMs
+2. Working on multiple projects each using different ROS distros, I am done dual booting and copying dotfiles, creating GitHub pipelines and manually setting up docker environments with no code completions and hints ;-;
+3. Well that's pretty much it.
+
+Feel free to not use it.
+
+Improvements and suggestions are always welcome.
 
 ## Steps
 
-1. Install Docker - [Official Installation guide](https://docs.docker.com/engine/install/)
+### Install Docker
+  - [Official Installation guide](https://docs.docker.com/engine/install/)
 
-2. Build docker image
+### Build the images
 
 A sample Dockerfile that configures an SSH daemon for CLion can be found [here](docker/sandbox.Dockerfile).
 To build the image, run
@@ -15,7 +25,7 @@ To build the image, run
 docker-compose build
 ```
 
-3. Start services
+### Start services
 
 - Run the containers
 
@@ -37,7 +47,7 @@ If you change your settings later or have ssh'ed into a host with similar settin
 ssh-keygen -f "$HOME/.ssh/known_hosts" -R "[localhost]:2222"
 ```
 
-4. Setup CLion
+### Setup CLion
 
 - Open Settings in CLion and add a new remote toolchain. Give it a name (say Docker) and use the credentials 
   used in the Dockerfile for SSH.
@@ -74,10 +84,10 @@ echo "$env_string"
   
 ![alt profileImg](img/profile.png)
 
-6. Reload the CMake project. This will allow for autocompletion and code hints in CLion. 
+### Reload the CMake project. This will allow for autocompletion and code hints in CLion. 
    Add to it debugging features and testing!!
 
-7. Save environment variables in Run/Debug configurations
+### Save environment variables in Run/Debug configurations
 
 - Click on Edit configurations under Run in CLion.
    
