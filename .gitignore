@@ -1,0 +1,10 @@
+# CLion
+.idea
+
+# CMake
+cmake-build-*
+
+# Catkin
+build
+devel
+.catkin_workspace
