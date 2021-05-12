@@ -1,6 +1,6 @@
 # ros-docker-clion
 
-Yet another workflow merging the Holy Trinity - ROS + Docker + CLion IDE. Creates a sandbox environment for building and testing ROS projects.
+Workflow merging the Holy Trinity - ROS + Docker + CLion IDE. Creates a sandbox environment for building and testing ROS projects.
 
 **But why I hear you ask. Here are my reasons:**
 1. I cannot stand VMs
