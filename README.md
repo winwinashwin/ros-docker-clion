@@ -1,6 +1,6 @@
 # ros-docker-clion
 
-Workflow merging the Holy Trinity - ROS + Docker + CLion IDE. Creates a sandbox environment for building and testing ROS projects.
+Workflow merging the Holy Trinity - ROS + Docker + CLion IDE.
 
 **But why I hear you ask. Here are my reasons:**
 1. I cannot stand VMs
@@ -11,15 +11,27 @@ Feel free to not use it.
 
 Improvements and suggestions are always welcome.
 
-## Steps
+## Features
 
-### Install Docker
-  - [Official Installation guide](https://docs.docker.com/engine/install/)
+- A sandbox container for building and testing ROS projects.
+- IDE auto-completion and code hints irrespective of host OS and ROS Distribution.
+- Simulation environment based on nvidia-docker2. GUI based nodes and applications can be run inside this container.
+
+## Setup
+
+### Install Docker and nvidia-docker2
+  - [Docker official Installation guide](https://docs.docker.com/engine/install/)
+  - [Nvidia container toolkit installation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#)
+
+### Run the setup script
+
+```bash
+bash dev/setup.sh
+```
 
 ### Build the images
 
-A sample Dockerfile that configures an SSH daemon for CLion can be found [here](docker/sandbox.Dockerfile).
-To build the image, run
+This might take some time.
 
 ```bash
 docker-compose build
@@ -33,7 +45,8 @@ docker-compose build
 docker-compose up
 ```
 
-This creates a sandbox environment into which the `src` directory is mounted as the catkin workspace `src` directory.
+This creates a sandbox container configured with SSH and a simulation container which can be used to run GUI based
+applications like RViz and Gazebo.
 
 You can now SSH into the sandbox environment and make sure everything is working properly.
 
@@ -54,7 +67,7 @@ ssh-keygen -f "$HOME/.ssh/known_hosts" -R "[localhost]:2222"
   
 ![alt toolchainImg](img/toolchain.png)
 
-5. Setup workspace
+### Setup workspace
 
 We need to fetch the required environment variables for remote builds and running binaries.
 
@@ -70,6 +83,7 @@ catkin_make
 NOTE: You can use Bash instead of the default shell sh, in that case source the corresponding setup scripts.
 
 - Run the following script to fetch the environment variables.
+
 ```bash
 ros_env="ROS_ROOT ROS_MASTER_URI ROS_PACKAGE_PATH CMAKE_PREFIX_PATH PKG_CONFIG_PATH PYTHONPATH LD_LIBRARY_PATH PATH ROS_DISTRO ROS_PYTHON_VERSION ROS_LOCALHOST_ONLY ROS_VERSION"
 env_string=""
@@ -81,7 +95,7 @@ echo "$env_string"
 
 - Save the output to some file as this will be handy in configuring the Run configurations for each target. 
   For build configurations copy and paste the output to CLion's CMake environment setting.
-  
+
 ![alt profileImg](img/profile.png)
 
 ### Reload the CMake project. This will allow for autocompletion and code hints in CLion. 
